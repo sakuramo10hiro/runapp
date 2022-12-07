@@ -1,0 +1,31 @@
+# composeファイルのバージョン
+version: "3.9"
+# servicesの下に使うコンテナを記述
+services:
+  db:
+    platform: linux/x86_64
+    image: mysql:5.7
+    # volumesにより(ホスト：コンテナ)のデータを同期する
+    # コンテナを消してもホスト上にデータが同期されるからDBのデータは残る
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      - MYSQL_ROOT_PASSWORD=strongrootpassword
+  web:
+    # カレントディレクトリにあるDockerfileをwebコンテナのイメージに使用
+    build: .
+    # docker-compose コマンドで発動。server.pidファイル削除し、railsサーバー起動。
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    # カレントディレクトリのファイルとコンテナ内のファイルを同期している
+    # コードを変更すればコンテナ内のコードも変更される
+    volumes:
+      - .:/runapp
+    # "ホストのポート番号:コンテナ内のポート番号"
+    # コンテナの3000番ポートでrailsサーバが起動しているので、
+    # ローカルの3000番ポートと繋ぎローカルでも確認できるようにする。
+    ports:
+      - "3000:3000"
+    # コンテナの起動順序と依存関係を記述する。
+    # この場合、コンテナの起動順はdb→web、しかし完全にdbが起動してからwebを起動するのではない
+    depends_on:
+      - db
