@@ -1,0 +1,12 @@
+<% if @course.favorite?(current_user) %>
+    # 一致するレコードが存在するすでにいいね済みの場合はdestroyアクションへ
+    <%= link_to course_favorite_path(@course.id), method: :delete do %>
+        <span style="color:red;">❤︎</span>
+    <% end %>
+<% else %>
+    # 一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ
+    <%= link_to course_favorites_path(@post.id), method: :post do %>
+        <span>❤︎</span>
+    <% end %>
+<% end %>
+
