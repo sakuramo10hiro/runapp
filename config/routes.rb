@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
-  root 'top#index'
+  root 'home#index'
+  devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :courses, only: [:new, :create, :edit, :update, :destroy]
 end
