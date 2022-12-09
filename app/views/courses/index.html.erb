@@ -20,9 +20,9 @@
       <% @courses.each do |course| %>
         <div class="list-panel">
           <div class="panel-lower">
-            <h2><%= course.title %></h2>
-            <span>メモ:</span>
-            <p><%= course.description %></p>
+            <h2><%= course.course_name %></h2>
+            <span></span>
+            <p><%= course.course_description %></p>
             <div class= "public" >
               <%= course.public == true ? "公開" : "非公開" %>
             </div>
