@@ -3,9 +3,11 @@ Rails.application.routes.draw do
   get "home" => "courses#show"
   devise_for :users, controllers: { registrations: 'users/registrations' }
   get '/users/sign_out' => 'devise/sessions#destroy'
-  resources :courses, only: [:new, :create, :edit, :update, :destroy]
+  get "users/show" => "users#show"
+  resources :courses, only: [:new, :create, :edit, :update, :destroy, :show]
 
   resources :courses do
     resource :favorites, only: [:create, :destroy]
- end
+    resources :comments, only: [:create] 
+  end
 end

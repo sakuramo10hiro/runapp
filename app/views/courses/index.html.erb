@@ -1,0 +1,56 @@
+<div class="page-container">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <%= link_to "#{current_user.name}のコース", home_path, class:"nav-link active" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "みんなのコース", home_path, class:"nav-link" %>
+    </li>
+  </ul>
+  <div class="inside-container">
+    <div class="new-list">
+      <h2>コースを投稿する</h2>
+        <%= form_with model: @course do |f| %>
+        <%= f.text_area :course_content, placeholder: '本文' %>
+        <%= f.submit %>
+      <% end %>    
+      <h2>コース一覧</h2>
+    </div> 
+    <div class="panel-container">
+      <% @courses.each do |course| %>
+        <div class="list-panel">
+          <div class="panel-lower">
+            <h2><%= course.title %></h2>
+            <span>メモ:</span>
+            <p><%= course.description %></p>
+            <div class= "public" >
+              <%= course.public == true ? "公開" : "非公開" %>
+            </div>
+            <div class=" list-footer">
+              <div class="achieved-button">
+                <%= link_to  course_path(id: course.id) do %>
+                  <button type="button" class="btn btn-outline-danger">達成！</button>
+                <% end %>
+              </div>
+              <div class="list-icons">
+                <div class="icon-link">
+                  <%= link_to  edit_course_path(course), class: "edit-link" do  %>
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  <% end %>
+                </div>
+                <div class="icon-link">
+                  <%= link_to course_path(course.id), method: :delete, class: "delete-link" do %>
+                    <i class="fa-solid fa-trash-can"></i>
+                  <% end %>
+                </div>
+              </div>  
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+  

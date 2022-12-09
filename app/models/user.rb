@@ -6,4 +6,5 @@ class User < ApplicationRecord
   
   has_many :courses, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :comments 
 end
