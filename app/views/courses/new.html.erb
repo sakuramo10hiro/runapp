@@ -19,31 +19,31 @@
           <div class="form_item">
             <span><%= f.label :road_type, "ロードタイプ:" %></span>
             <%= f.radio_button :road_type, "road" %>ロード
-            <%= f.radio_button :road_type, "trail" %>トレイル
+            <%= f.radio_button :road_type, "trail", checked: true %>トレイル
             <%= f.radio_button :road_type, "track" %>トラック<br>
           </div>
           <div class="form_item">
             <span><%= f.label  :root, "コースルート:" %></span>
             <%= f.radio_button :root, "go_around" %>周回
-            <%= f.radio_button :root, "round_trip" %>往復
+            <%= f.radio_button :root, "round_trip", checked: true %>往復
             <%= f.radio_button :root, "one_way" %>片道<br>
           </div>
           <div class="form_item">
             <span><%= f.label :signal, "信号機:" %></span>
             <%= f.radio_button :signal, "little" %>少ない
-            <%= f.radio_button :signal, "usually" %>普通
+            <%= f.radio_button :signal, "usually", checked: true %>普通
             <%= f.radio_button :signal, "many" %>多い<br>
           </div>
           <div class="form_item">
             <span><%= f.label :undulation, "起伏:" %></span>
             <%= f.radio_button :undulation, "little" %>少ない
-            <%= f.radio_button :undulation, "tusually" %>普通
+            <%= f.radio_button :undulation, "tusually", checked: true %>普通
             <%= f.radio_button :undulation, "many" %>多い<br>
           </div>
           <div class="form_item">
             <span><%= f.label  :toilet, "公園やトイレ:" %></span>
             <%= f.radio_button :toilet, "little" %>少ない
-            <%= f.radio_button :toilet, "tusually" %>普通
+            <%= f.radio_button :toilet, "tusually", checked: true %>普通
             <%= f.radio_button :toilet, "many" %>多い<br>
           </div>
           <div class="form_item">
