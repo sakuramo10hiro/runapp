@@ -1,0 +1,64 @@
+<div class="page-container">
+  <div class="form-container">
+    <div class="form-content">
+      <h2>コース編集</h2>
+      <div class="field-item-container">
+      <%= form_with model: @course do |f| %>
+          <div class="field-item">
+            <%= f.label :コース名, class:"item-label" %><span class="item-sub-label">(30文字以内)</span><br />
+            <%= f.text_field :course_name, class:"text-field" %>
+          </div>
+          <div class="field-item">
+            <%= f.label :コース説明, class:"item-label" %><br />
+            <%= f.text_area :course_description, class:"text-box" %>
+          </div>
+          <div class="field-item">
+            <%= f.label :距離, class:"item-label" %><br />
+            <%= f.number_field :distance, autocomplete: "off", in: 1..42 %><span class="item-sub-label">km</span><br />
+          </div>
+          <div class="form_item">
+            <span><%= f.label :road_type, "ロードタイプ:" %></span>
+            <%= f.radio_button :road_type, "road" %>ロード
+            <%= f.radio_button :road_type, "trail" %>トレイル
+            <%= f.radio_button :road_type, "track" %>トラック<br>
+          </div>
+          <div class="form_item">
+            <span><%= f.label  :root, "コースルート:" %></span>
+            <%= f.radio_button :root, "go_around" %>周回
+            <%= f.radio_button :root, "round_trip" %>往復
+            <%= f.radio_button :root, "one_way" %>片道<br>
+          </div>
+          <div class="form_item">
+            <span><%= f.label :signal, "信号機:" %></span>
+            <%= f.radio_button :signal, "little" %>少ない
+            <%= f.radio_button :signal, "usually" %>普通
+            <%= f.radio_button :signal, "many" %>多い<br>
+          </div>
+          <div class="form_item">
+            <span><%= f.label :undulation, "起伏:" %></span>
+            <%= f.radio_button :undulation, "little" %>少ない
+            <%= f.radio_button :undulation, "tusually" %>普通
+            <%= f.radio_button :undulation, "many" %>多い<br>
+          </div>
+          <div class="form_item">
+            <span><%= f.label  :toilet, "公園やトイレ:" %></span>
+            <%= f.radio_button :toilet, "little" %>少ない
+            <%= f.radio_button :toilet, "tusually" %>普通
+            <%= f.radio_button :toilet, "many" %>多い<br>
+          </div>
+          <div class="form_item">
+            <%= f.label :course_image ,"コース画像" %><br />
+            <%= f.file_field :course_image %>
+          </div>
+          <div class="field-item">
+            <%= f.label :公開設定, class:"item-label" %><br />
+            <%= f.select :public, [['公開',true],['非公開',false]], { include_blank: true, selected: 0 }, class:"short-field" %>
+          </div>
+          <div class="actions">
+            <%= f.submit "投稿", class:"submit-btn" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
