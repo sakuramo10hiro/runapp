@@ -1,8 +1,10 @@
 <header class="header">
   <div class="header-container">
     <div class="header-left">
-      <h1>Change of Run(画像挿し込み)</h1>
-    </div>
+      <%= link_to root_path do%>
+        <%= image_tag 'logo.png', alt: 'ロゴイメージ' %>
+      <% end %>
+    </div> 
     <div class="header-rigtht">
       <ul class="nav">
       <% if user_signed_in? %>
@@ -10,13 +12,16 @@
           <%= link_to "TOP", root_path, class: "nav-text" %>
         </li>
         <li class="header-nav-item">
-          <%= link_to "myコース", home_path, class: "nav-text" %>
+          <%= link_to "自分のコース", courses_path, class: "nav-text" %>
         </li>
         <li class="header-nav-item">
-          <%= link_to "otherコース", home_path, class: "nav-text" %>
+          <%= link_to "皆んなのコース", courses_path, class: "nav-text" %>
         </li>
         <li class="header-nav-item">
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-text" %>
+          <%= link_to "#{current_user.name}", users_show_path, class: "nav-text" %> 
+        </li>
+        <li class="header-nav-item">
+          <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-text" %>
         </li>
       <% else %> 
         <li class="header-nav-item">

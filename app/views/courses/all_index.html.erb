@@ -8,6 +8,9 @@
     </li>
   </ul>
   <div class="inside-container">
+      <div class="notice">
+        <p>※非公開のコースは表示されていません</p>
+      </div>
     <div class="new-course">
       <%= link_to(new_course_path) do %> 
         <button type="button" class="btn btn-outline-success create-btn">新規作成</button>
@@ -28,13 +31,10 @@
             <p>地図: <%= course.address %></p>
             <div class="achieved-image-container">
               <% if course.course_image.attached? %>
-                <%= image_tag course.course_image, class: "achieved-image" %>
+                <%= image_tag course.course_image, class: "course-image" %>
               <% else %>
                 <%= image_tag "no-images.png", class: "achieved-image" %>
               <% end %>
-            </div>
-            <div class= "public" >
-              <%= course.public == true ? "公開" : "非公開" %>
             </div>
             <div class=" list-footer">
               <div class="achieved-button">

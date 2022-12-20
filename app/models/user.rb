@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :courses, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :comments 
-
+  has_one_attached :image
   has_many :relationships
   has_many :followings, through: :relationships, source: :follow
   has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'follow_id'
