@@ -33,7 +33,23 @@
               <% end %>
             </div>
             <div class= "public" >
-            <p>公開設定: <%= @course.public == true ? "公開" : "非公開" %></p>
+              <p>公開設定: <%= @course.public == true ? "公開" : "非公開" %></p>
+            </div>
+            <div class= "comment_container" >
+              <%= form_with(model:[@course, @comment], method: :post) do |f| %>
+                <%= f.text_area :comment_content,placeholder: 'コメント本文' %>
+                <%= f.hidden_field :course_id, value: @course.id %>
+                <br>
+                <%= f.submit 'コメントする' %>
+              <% end %>
+              <p>コメント一覧</p>
+              <% @comments.each do |c| %>
+                <div>
+                  <a href="/users/<%= @course.user.id %>"><%= c.user.name %></a>
+                  <%= c.comment_content %>
+                  <hr>
+                </div>
+              <% end %>
             </div>
             <div class=" list-footer">
               <div class="achieved-button">

@@ -36,24 +36,17 @@
             <div class= "public" >
               <%= course.public == true ? "公開" : "非公開" %>
             </div>
-            <div class=" list-footer">
-              <div class="achieved-button">
-                <%= link_to  new_course_path(id: course.id) do %>
+
+            <% if course.favorited?(current_user) %>
+                <%= link_to course_favorites_path(course.id), method: :delete do %>
+                    <span style="color:red;">❤︎</span>
                 <% end %>
-              </div>
-              <div class="list-icons">
-                <div class="icon-link">
-                  <%= link_to  edit_course_path(course), class: "edit-link" do  %>
-                    <i class="fa-solid fa-pen-to-square"></i>
-                  <% end %>
-                </div>
-                <div class="icon-link">
-                  <%= link_to course_path(course.id), method: :delete, class: "delete-link" do %>
-                    <i class="fa-solid fa-trash-can"></i>
-                  <% end %>
-                </div>
-              </div>  
-            </div>
+            <% else %>
+                <%= link_to course_favorites_path(course.id), method: :post do %>
+                    <span>❤︎</span>
+                <% end %>
+            <% end %>
+
           </div>
         </div>
       <% end %>

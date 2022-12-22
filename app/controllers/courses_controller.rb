@@ -15,7 +15,8 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
-    @comment = Comment.new
+    @comments = @course.comments  
+    @comment = current_user.comments.new 
     gon.course = @course
     @road_type = {0=> 'ロード', 1=> 'トレイル', 2=> 'トラック'}
     @route = {0=> '周回', 1=> '往復', 2=> '片道'}
@@ -72,7 +73,7 @@ class CoursesController < ApplicationController
   private
 
   def course_params
-    params.require(:course).permit(:course_name, :course_description, :public, :course_image, :distance, :road_type, :toilet, :undulation, :signal, :address)
+    params.require(:course).permit(:course_name, :course_description, :public, :course_image, :distance, :road_type, :toilet, :undulation, :signal, :address, :course_content)
   end
 
 end

@@ -4,10 +4,10 @@ Rails.application.routes.draw do
   get "users/show" => "users#show"
   get "mypage" => "courses#index"
   get "otherpage" => "courses#all_index" 
-  resources :courses, only: [:new, :create, :edit, :update, :destroy, :show]
-  resources :relationships, only: [:create, :destroy]
-  resources :courses do
+  resources :courses, only: [:new, :create, :edit, :update, :destroy, :show, :index, :all_index]do
     resource :favorites, only: [:create, :destroy]
     resources :comments, only: [:create] 
   end
+  resources :relationships, only: [:create, :destroy]
+
 end
