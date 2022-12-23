@@ -33,20 +33,37 @@
                 <%= image_tag "no-images.png", class: "achieved-image" %>
               <% end %>
             </div>
-            <div class= "public" >
-              <%= course.public == true ? "公開" : "非公開" %>
+            <div class="list-icons">
+              <div class="icon-link">
+                <% if course.favorited?(current_user) %>
+                    <%= link_to course_favorites_path(course.id), method: :delete, class: "favorite_button" do %>
+                      <i class="fas fa-heart"></i>
+                      <span><%= course.favorites.count %></span>
+                    <% end %>
+                <% else %>
+                    <%= link_to course_favorites_path(course.id), method: :post do %>
+                      <i class="far fa-heart"></i>
+                      <span><%= course.favorites.count %></span>
+                    <% end %>
+                <% end %>
+              </div>
+              <div class="icon-link">
+                <%= link_to  course_path(course.id), class: "comment-link" do  %>
+                  <i class="fas fa-comment-alt "></i>
+                  <%= "#{course.comments.count}" %>
+                <% end %>
+              </div>
+              <div class="icon-link">
+                <%= link_to  edit_course_path(course), class: "edit-link" do  %>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                <% end %>
+              </div>
+              <div class="icon-link">
+                <%= link_to course_path(course.id), method: :delete, class: "delete-link" do %>
+                  <i class="fa-solid fa-trash-can"></i>
+                <% end %>
+              </div>
             </div>
-
-            <% if course.favorited?(current_user) %>
-                <%= link_to course_favorites_path(course.id), method: :delete do %>
-                    <span style="color:red;">❤︎</span>
-                <% end %>
-            <% else %>
-                <%= link_to course_favorites_path(course.id), method: :post do %>
-                    <span>❤︎</span>
-                <% end %>
-            <% end %>
-
           </div>
         </div>
       <% end %>
