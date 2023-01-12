@@ -11,14 +11,18 @@
       <div class="info-container">
         <div class="info" >
           <h2><%= @user.name %></h2>
+          <%= render "shared/followers", user: @user %>
+          <%= render "shared/follow_button", user: @user %> 
           <div class="user-info">
             <p>メールアドレス : <span><%= @user.email %></span></p>
-            <p>myコースの数・・・・<span><%= @courses.count %></span></p>
+            <p><%= @user.name %>さんの投稿コース・・・<span><%= link_to @courses.count %></span></p>
           </div>
           <div class="icon-link">
-            <%= link_to edit_user_registration_path, class:"link" do %>
-              <span>プロフィール写真変更</span>
-              <i class="fa-solid fa-pen-to-square"></i>
+            <% if @user == current_user %>
+              <%= link_to edit_user_registration_path, class:"link" do %>
+                <span>プロフィール写真変更</span>
+                <i class="fa-solid fa-pen-to-square"></i>
+              <% end %>
             <% end %>
           </div>
         </div>
