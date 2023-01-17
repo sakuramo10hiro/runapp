@@ -5,7 +5,6 @@ class CoursesController < ApplicationController
   def index
     @courses = Course.all.where(user_id: current_user.id)
     @users = User.all
-    gon.course = @course
     @road_type = {0=> 'ロード', 1=> 'トレイル', 2=> 'トラック'}
     @route = {0=> '周回', 1=> '往復', 2=> '片道'}
     @toilet = {0=> '少ない', 1=> '普通', 2=> '多い'}
@@ -17,7 +16,6 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     @comments = @course.comments  
     @comment = current_user.comments.new 
-    gon.course = @course
     @road_type = {0=> 'ロード', 1=> 'トレイル', 2=> 'トラック'}
     @route = {0=> '周回', 1=> '往復', 2=> '片道'}
     @toilet = {0=> '少ない', 1=> '普通', 2=> '多い'}
@@ -62,7 +60,6 @@ class CoursesController < ApplicationController
   def all_index
     @courses = Course.all.where(public: true)
     @users = User.all
-    gon.course = @course
     @road_type = {0=> 'ロード', 1=> 'トレイル', 2=> 'トラック'}
     @route = {0=> '周回', 1=> '往復', 2=> '片道'}
     @toilet = {0=> '少ない', 1=> '普通', 2=> '多い'}
@@ -73,7 +70,7 @@ class CoursesController < ApplicationController
   private
 
   def course_params
-    params.require(:course).permit(:course_name, :course_description, :public, :course_image, :distance, :road_type, :toilet, :undulation, :signal, :address, :course_content)
+    params.require(:course).permit(:course_name, :course_description, :public, :course_image, :distance, :road_type, :toilet, :undulation, :signal, :address, :latitude, :longitude, :course_content, :route)
   end
 
 end

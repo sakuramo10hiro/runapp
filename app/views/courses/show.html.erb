@@ -24,7 +24,50 @@
             <p>公園やトイレ: <%= @toilet[@course.toilet] %></p>
             <p>起伏: <%= @undulation[@course.undulation] %></p>
             <p>信号: <%= @signal[@course.signal] %></p>
+
+            <!-- 住所表示エリア -->            
             <p>地図: <%= @course.address %></p>
+            
+            <div id='map'></div>
+
+            <style>
+            #map {
+              height: 300px;
+              width: 400px;
+            }
+            </style>
+            
+            <!-- Googleマップ表示用の Javascript -->
+            <script>
+              function initMap(){
+                // 地図の位置情報(緯度・経度)を取得
+                let mapPosition = {lat: <%= @course.latitude || 0 %> , lng: <%= @course.longitude || 0 %> };
+                let map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 15,
+                  center: mapPosition
+                });
+                let transitLayer = new google.maps.TransitLayer();
+                transitLayer.setMap(map);
+            
+                let contentString = '【住所】<%= @course.address %>';
+                let infowindow = new google.maps.InfoWindow({
+                  content: contentString
+                });
+            
+                let marker = new google.maps.Marker({
+                  position: mapPosition,
+                  map: map,
+                  title: contentString
+                });
+            
+                marker.addListener('click', function(){
+                  infowindow.open(map, marker);
+                });
+              }
+              </script>
+            
+              <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
+
             <div class="achieved-image-container">
               <% if @course.course_image.attached? %>
                 <%= image_tag @course.course_image, class: "course-image" %>
@@ -60,12 +103,12 @@
                 <% if @course.user == current_user %>
                   <div class="icon-link">
                     <%= link_to  edit_course_path(@course.id),  class: 'btn btn-primary mr-3' do  %>
-                      <i class="fa-solid fa-pen-to-square">コースの編集</i>
+                      <i class="fa-solid fa-pen-to-square">コース編集</i>
                     <% end %>
                   </div>
                   <div class="icon-link">
                     <%= link_to course_path(@course.id), method: :delete, class: 'btn btn-danger' do %>
-                      <i class="fa-solid fa-trash-can">コースを削除</i>
+                      <i class="fa-solid fa-trash-can">コース削除</i>
                     <% end %>
                   </div>
                 <% end %>

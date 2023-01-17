@@ -18,7 +18,7 @@
           <%= link_to "その他のコース", otherpage_path, class: "nav-text" %>
         </li>
         <li class="header-nav-item">
-          <%= link_to "#{current_user.name}","/user/#{current_user.id}", class: "nav-text" %> 
+          <%= link_to "マイページ","/user/#{current_user.id}", class: "nav-text" %> 
         </li>
         <li class="header-nav-item">
           <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-text" %>
