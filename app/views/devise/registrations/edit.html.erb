@@ -22,7 +22,7 @@
                 <%= f.submit "変更する", class:"submit-btn" %>
               </div>
               <div class="field">
-                <%= link_to  "プロフィールに戻る", users_show_path, class:"link" %>
+                <%= link_to  "プロフィールに戻る","/user/#{current_user.id}", class:"link" %>
               </div>
           </div>
         </div>

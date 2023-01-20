@@ -10,9 +10,11 @@
 .main-section{
   width: 100%;
   height: 600px;
-  background-image: image-url('main-image.jpg');
-  background-size: cover;
-  background-color: $sub-transparent;
+  background-image: image-url('bg_image.jpg');
+  background-position:center center;                     /* 画像の表示位置を指定 */
+  background-size:cover;                                 /* 画像のサイズを指定  */
+  width:100%;                                            /* 横幅のサイズを指定  */
+  height:950px;  
 }
 
 .main-section-cover{
@@ -22,13 +24,15 @@
   position:absolute;
   font-size:100px;
   color:$white;
-  background-color: $sub-transparent;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .main-content{
   text-align: center;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-style: italic;
+   text-shadow: 1px 1px 2px silver;
   h1{
     font-size: 45px;
   }
@@ -38,7 +42,7 @@
 }
 .about-section{
   width: 100%;
-  background-color: $sub-transparent;
+  background-color: Azure;
   display: flex;
   justify-content: center;
   color: $brown;
@@ -47,6 +51,7 @@
   margin: 30px;
   text-align: center;
   font-family: 'Zen Kaku Gothic New', sans-serif;
+  color:black;
   h3{
     margin: 20px;
   }
@@ -70,6 +75,8 @@
   width: 100%;
   padding-bottom: 50px;
   padding-top: 30px;
+  color:black;
+  background-color: Azure;
 }
 .feature-content{
   margin: 30px;

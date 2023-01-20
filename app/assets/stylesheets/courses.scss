@@ -2,7 +2,22 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
+@import "color.scss";
+
 #map {
-  height: 300px;
-  width: 400px;
+  height:500px;
+  width: 600px;
+}
+.course-image-container{
+  width: 50%;
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+.course-image{
+  width: 100%;
+  max-width: 250px;
+  border-radius: 10px;
+  border: 1px solid $border-gray-color;
 }

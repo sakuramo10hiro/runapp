@@ -14,8 +14,14 @@
       <% end %>
     </div> 
     <div class="panel-container">
-        <div class="list-panel">
+        <div class="course-panel">
           <div class="panel-lower">
+            <% if @course.user.image.attached? %>
+              <%= image_tag @course.user.image.variant(resize: "100x100"), class: "profile-image" %>
+            <% else %>
+              <%= image_tag "default_icon.jpg", class: "profile-image" %>
+            <% end %>
+          </div>
             <h2><%= @course.course_name %></h2>
             <p>コース説明: <%= @course.course_description %></p>
             <p>距離: <%= @course.distance %> km </p>
@@ -24,19 +30,9 @@
             <p>公園やトイレ: <%= @toilet[@course.toilet] %></p>
             <p>起伏: <%= @undulation[@course.undulation] %></p>
             <p>信号: <%= @signal[@course.signal] %></p>
-
             <!-- 住所表示エリア -->            
             <p>地図: <%= @course.address %></p>
-            
             <div id='map'></div>
-
-            <style>
-            #map {
-              height: 300px;
-              width: 400px;
-            }
-            </style>
-            
             <!-- Googleマップ表示用の Javascript -->
             <script>
               function initMap(){
@@ -65,14 +61,12 @@
                 });
               }
               </script>
-            
               <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
-
-            <div class="achieved-image-container">
+            <div class="course-image-container">
               <% if @course.course_image.attached? %>
                 <%= image_tag @course.course_image, class: "course-image" %>
               <% else %>
-                <%= image_tag "no-images.png", class: "achieved-image" %>
+                <%= image_tag "no-images.png", class: "course-image" %>
               <% end %>
             </div>
             <div class= "public" >
