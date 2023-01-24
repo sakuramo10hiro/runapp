@@ -12,6 +12,16 @@ class CoursesController < ApplicationController
     @signal = {0=> '少ない', 1=> '普通', 2=> '多い'}
   end
 
+  def index_user
+    @courses = Course.where(user_id:params[:id])
+    @user = User.find(params[:id])
+    @road_type = {0=> 'ロード', 1=> 'トレイル', 2=> 'トラック'}
+    @route = {0=> '周回', 1=> '往復', 2=> '片道'}
+    @toilet = {0=> '少ない', 1=> '普通', 2=> '多い'}
+    @undulation = {0=> '少ない', 1=> '普通', 2=> '多い'}
+    @signal = {0=> '少ない', 1=> '普通', 2=> '多い'}
+  end
+
   def show
     @course = Course.find(params[:id])
     @comments = @course.comments  

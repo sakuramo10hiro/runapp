@@ -16,10 +16,11 @@
     <div class="panel-container">
         <div class="course-panel">
           <div class="panel-lower">
+          <p>投稿者: <%= link_to(@course.user.name, "/user/#{@course.user.id}") %></p>
             <% if @course.user.image.attached? %>
-              <%= image_tag @course.user.image.variant(resize: "100x100"), class: "profile-image" %>
+              <%= image_tag @course.user.image, class:"icon-image" %>
             <% else %>
-              <%= image_tag "default_icon.jpg", class: "profile-image" %>
+              <%= image_tag "default_icon.jpg", class:"icon-image" %>
             <% end %>
           </div>
             <h2><%= @course.course_name %></h2>

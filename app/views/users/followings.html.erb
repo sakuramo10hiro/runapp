@@ -1,4 +1,9 @@
-<p>フォロー一覧</p><br/>
+<p> <%= @user.followings.count %>フォロー中</p><br/>
   <% @users.each do |user| %>
-  <%= user.name %>
+  <% if user.image.attached? %>
+    <%= image_tag user.image, class:"icon-image" %>
+  <% else %>
+    <%= image_tag "default_icon.jpg", class:"icon-image" %>
+  <% end %>
+  <p><%= link_to(user.name, "/user/#{user.id}") %></p>
 <% end %>

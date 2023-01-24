@@ -4,6 +4,7 @@ class UsersController < ApplicationController
     @users = User.all
     @courses = Course.all.where(user_id: current_user.id)
   end
+
   before_action :set_user, only: [:followings, :followers]
     def followings
       @users = @user.followings

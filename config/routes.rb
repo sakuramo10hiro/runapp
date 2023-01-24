@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :courses, only: [:new, :create, :edit, :update, :destroy, :show, :index, :all_index]do
     resource :favorites, only: [:create, :destroy]
     resources :comments, only: [:create] 
+    member do
+      get :index_user
+    end
   end
   resources :relationships, only: [:create, :destroy]
   resources :users do

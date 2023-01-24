@@ -1,0 +1,47 @@
+<div class="panel-container">
+<h3><%= @user.name %>さんの投稿コース一覧</h3>
+<% @courses.each do |course| %>
+  <div class="list-panel">
+    <div class="panel-lower">
+      <h2><%= link_to course.course_name, course_path(course.id) %></h2>
+      <p>投稿者: <%= link_to(course.user.name, "/user/#{course.user.id}") %></p>
+      <p>コース説明: <%= course.course_description %></p>
+      <p>距離: <%= course.distance %> km </p>
+      <p>ロードタイプ: <%= @road_type[course.road_type] %></p>
+      <p>コースルート: <%= @route[course.route] %></p>
+      <p>公園やトイレ: <%= @toilet[course.toilet] %></p>
+      <p>起伏: <%= @undulation[course.undulation] %></p>
+      <p>信号: <%= @signal[course.signal] %></p>
+      <p>地図: <%= course.address %></p>
+      <div class="achieved-image-container">
+        <% if course.course_image.attached? %>
+          <%= image_tag course.course_image, class: "course-image" %>
+        <% else %>
+          <%= image_tag "no-images.png", class: "achieved-image" %>
+        <% end %>
+      </div>
+      <div class="list-icons">
+        <div class="icon-link">
+          <% if course.favorited?(current_user) %>
+              <%= link_to course_favorites_path(course.id), method: :delete, class: "favorite_button" do %>
+                <i class="fas fa-heart"></i>
+                <span><%= course.favorites.count %></span>
+              <% end %>
+          <% else %>
+              <%= link_to course_favorites_path(course.id), method: :post do %>
+                <i class="far fa-heart"></i>
+                <span><%= course.favorites.count %></span>
+              <% end %>
+          <% end %>
+        </div>
+        <div class="icon-link">
+          <%= link_to  course_path(course.id), class: "comment-link" do  %>
+            <i class="fas fa-comment-alt "></i>
+            <%= "#{course.comments.count}" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>

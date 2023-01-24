@@ -15,7 +15,7 @@
           <%= render "shared/follow_button", user: @user %> 
           <div class="user-info">
             <p>メールアドレス : <span><%= @user.email %></span></p>
-            <p><%= @user.name %>さんの投稿コース・・・<span><%= link_to @courses.count %></span></p>
+            <p><%= @user.name %>さんの投稿コース・・・<span><%= link_to @courses.count, index_user_course_path %></span></p>
           </div>
           <div class="icon-link">
             <% if @user == current_user %>
