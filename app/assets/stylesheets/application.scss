@@ -26,19 +26,18 @@
    min-height: 100vh;
  }
  .header{
-   height: 80px;
+   height: 100px;
    background-color: black;
-   padding-top: 20px;
-   padding-bottom: 20px;
+   padding-top: 30px;
+   padding-bottom: 30px;
  }
  .header-container{
-   margin: 0 30px;
+   margin: 0 40px;
    display: flex;
    height: 40px;
    justify-content: space-between;
  }
  .header-left{
-   width: 35%;
    h1{
      color: $main-color;
      font-size: 32px;
@@ -68,7 +67,7 @@
    min-height: calc(100vh - 80px);
    padding-top: 40px;
    padding-bottom: 30px;
-   background:$back-color;
+   background:Azure;
  
  }
  .page-container2{
@@ -88,7 +87,7 @@
  }
  .footer .copyright {
    margin: 0;
-   padding: 20px;
+   padding: 0px;
    height: 40px;
  }
  .nav-tabs{
@@ -121,6 +120,15 @@
    margin-left: auto;
    margin-bottom: 30px;
  }
+ .index-user-container{
+    border-radius: 20px 20px 20px 20px;
+    background-color: #ffffff;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 30px;
+    padding-top: 20px;
+ }
  .form-container{
    border-radius: 20px 20px 20px 20px;
    border: 2px solid $brown;
@@ -133,6 +141,13 @@
    background-color: $white;
  }
  
+ .main-container{
+  border-radius: 20px 20px 20px 20px;
+  background-color: $white;
+  width: 50%;
+  margin-right: auto;
+  margin-left: auto;
+ }
  .another-btn{
    color: $brown;
    text-decoration: none;
@@ -153,6 +168,7 @@
  .form-content{
    width: 100%;
    position: relative;
+   text-align: center;
  
    h2{
      margin: 0 0 30px 0;
@@ -160,9 +176,7 @@
      color: $brown;
      font-weight: bold;
    }
-   p{
-     font-family: 'Kiwi Maru', serif;
- 
+   p{ 
      text-align: center;
    }
    .field-item-container{
@@ -171,27 +185,24 @@
      margin-right: auto;
      .field-item{
        width: 100%;
-       margin-bottom: 10px;
- 
+       margin-bottom: 20px;
        .item-label{
          width: 100%;
-         color: $main-color;
+         color: black;
          font-weight: bold;
          display: inline;
        }
        .item-sub-label{
          font-size: 13px;
-         color: $main-color;
+         color: black;
        }
        .item-text{
          width: 100%;
-         font-family: 'Kiwi Maru', serif;
          font-weight: bold;
          font-size: 25px;
        }
        .item-sub-text{
          width: 100%;
-         font-family: 'Kiwi Maru', serif;
          font-weight: bold;
          font-size: 18px;
        }
@@ -225,6 +236,18 @@
            outline: 1px solid $main-color;
          }
        }
+     }
+     .button-item{
+      margin-bottom: 20px;
+      .radio-button{
+        margin: 0 10px 0 10px;
+      }
+      .item-label{
+        width: 100%;
+        color: black;
+        font-weight: bold;
+        display: inline;
+      }
      }
      .actions{
        margin-top: 20px;

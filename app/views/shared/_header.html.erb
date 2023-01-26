@@ -2,7 +2,7 @@
   <div class="header-container">
     <div class="header-left">
       <%= link_to root_path do%>
-        <%= image_tag 'logo.png', alt: 'ロゴイメージ',:size =>'350x100',class:'logo-image' %>
+        <%= image_tag 'logo.png', alt: 'ロゴイメージ',:size =>'350x60',class:'logo-image' %>
       <% end %>
     </div> 
     <div class="header-rigtht">
@@ -15,7 +15,7 @@
           <%= link_to "マイコース", mypage_path, class: "nav-text" %>
         </li>
         <li class="header-nav-item">
-          <%= link_to "その他のコース", otherpage_path, class: "nav-text" %>
+          <%= link_to "全員のコース", otherpage_path, class: "nav-text" %>
         </li>
         <li class="header-nav-item">
           <%= link_to "マイページ","/user/#{current_user.id}", class: "nav-text" %> 

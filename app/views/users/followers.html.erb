@@ -6,4 +6,5 @@
     <%= image_tag "default_icon.jpg", class:"icon-image" %>
   <% end %>
   <p><%= link_to(user.name, "/user/#{user.id}") %></p>
+  <p>自己紹介 <%= user.introduction %></p>
 <% end %>

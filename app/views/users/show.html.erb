@@ -1,5 +1,5 @@
 <div class="page-container">
-  <div class="inside-container">
+  <div class="main-container">
     <div class="profile-container">
       <div class="image-container">
         <% if @user.image.attached? %>
@@ -14,13 +14,21 @@
           <%= render "shared/followers", user: @user %>
           <%= render "shared/follow_button", user: @user %> 
           <div class="user-info">
-            <p>メールアドレス : <span><%= @user.email %></span></p>
-            <p><%= @user.name %>さんの投稿コース・・・<span><%= link_to @courses.count, index_user_course_path %></span></p>
+            <p>自己紹介</p>
+              <%=@user.introduction %>
+            <% if @user == current_user %>
+              <p>メールアドレス : <span><%= @user.email %></span></p>
+            <% end %>
+            <% if @user == current_user %>
+              <p>投稿コース・・・<span><%= link_to current_user.courses.count, mypage_path %></span></p>
+            <% else %>
+              <p><%= @user.name %>さんの投稿コース・・・<span><%= link_to @user.courses.count, index_user_course_path %></span></p>
+            <% end %>
           </div>
           <div class="icon-link">
             <% if @user == current_user %>
               <%= link_to edit_user_registration_path, class:"link" do %>
-                <span>プロフィール写真変更</span>
+                <span>プロフィール編集</span>
                 <i class="fa-solid fa-pen-to-square"></i>
               <% end %>
             <% end %>
