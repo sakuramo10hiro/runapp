@@ -26,7 +26,9 @@
                 <%= f.submit "変更完了", class:"submit-btn" %>
               </div>
               <div class="field">
-                <%= link_to  "マイページに戻る","/user/#{current_user.id}", class:"link" %>
+                <%= link_to  "/user/#{current_user.id}", class:"link" do %>
+                  <i class="fa fa-reply" aria-hidden="true"></i>マイページへ戻る
+                <% end %>
               </div>
           </div>
         </div>

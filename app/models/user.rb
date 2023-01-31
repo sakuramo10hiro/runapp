@@ -9,7 +9,7 @@ class User < ApplicationRecord
   
   has_many :courses, dependent: :destroy
   has_many :favorites, dependent: :destroy
-  has_many :comments 
+  has_many :comments, dependent: :destroy 
   has_one_attached :image
   has_many :relationships
   has_many :followings, through: :relationships, source: :follow

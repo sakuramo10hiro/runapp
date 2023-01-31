@@ -4,7 +4,7 @@
       <%= link_to "#{current_user.name}のコース", mypage_path, class:"nav-link active" %>
     </li>
     <li class="nav-item">
-      <%= link_to "その他のコース", otherpage_path, class:"nav-link" %>
+      <%= link_to "全員のコース", otherpage_path, class:"nav-link" %>
     </li>
   </ul>
   <div class="inside-container">
@@ -14,25 +14,24 @@
       <% end %>
     </div> 
     <div class="panel-container">
-        <div class="course-panel">
+        <div class="course-main-panel">
           <div class="panel-lower">
-          <p>投稿者: <%= link_to(@course.user.name, "/user/#{@course.user.id}") %></p>
+           <h2><%= @course.course_name %></h2>
             <% if @course.user.image.attached? %>
               <%= image_tag @course.user.image, class:"icon-image" %>
             <% else %>
               <%= image_tag "default_icon.jpg", class:"icon-image" %>
             <% end %>
-          </div>
-            <h2><%= @course.course_name %></h2>
-            <p>コース説明: <%= @course.course_description %></p>
-            <p>距離: <%= @course.distance %> km </p>
-            <p>ロードタイプ: <%= @road_type[@course.road_type] %></p>
-            <p>コースルート: <%= @route[@course.route] %></p>
-            <p>公園やトイレ: <%= @toilet[@course.toilet] %></p>
-            <p>起伏: <%= @undulation[@course.undulation] %></p>
-            <p>信号: <%= @signal[@course.signal] %></p>
+            <p>投稿者<i class="fa-solid fa-user"></i> <%= link_to(@course.user.name, "/user/#{@course.user.id}") %>さん</p>
+            <p>コース説明 <i class="fa-solid fa-pen-nib"></i> ・・・<%= @course.course_description %></p>
+            <p>距離 <i class="fa-solid fa-person-running"></i> ・・・<%= @course.distance %> km </p>
+            <p>ロードタイプ <i class="fa-sharp fa-solid fa-road"></i> ・・・<%= @road_type[@course.road_type] %></p>
+            <p>コースルート <i class="fa-solid fa-route"></i> ・・・<%= @route[@course.route] %></p>
+            <p>公園やトイレ <i class="fa-solid fa-restroom"></i> ・・・<%= @toilet[@course.toilet] %></p>
+            <p>起伏 <i class="fa-solid fa-mound"></i> ・・・<%= @undulation[@course.undulation] %></p>
+            <p>信号 <i class="fa-solid fa-traffic-light"></i> ・・・<%= @signal[@course.signal] %></p>
             <!-- 住所表示エリア -->            
-            <p>地図: <%= @course.address %></p>
+            <p>地図 <i class="fa-solid fa-location-dot"></i> ・・・<%= @course.address %></p>
             <div id='map'></div>
             <!-- Googleマップ表示用の Javascript -->
             <script>
@@ -44,64 +43,74 @@
                   center: mapPosition
                 });
                 let transitLayer = new google.maps.TransitLayer();
-                transitLayer.setMap(map);
-            
+                transitLayer.setMap(map);            
                 let contentString = '【住所】<%= @course.address %>';
                 let infowindow = new google.maps.InfoWindow({
                   content: contentString
-                });
-            
+                });            
                 let marker = new google.maps.Marker({
                   position: mapPosition,
                   map: map,
                   title: contentString
                 });
-            
                 marker.addListener('click', function(){
                   infowindow.open(map, marker);
                 });
               }
               </script>
               <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
+              <p>コース写真<i class="fa-solid fa-image"></i> </p>
             <div class="course-image-container">
               <% if @course.course_image.attached? %>
-                <%= image_tag @course.course_image, class: "course-image" %>
+                <%= image_tag @course.course_image, class: "course-list-image" %>
               <% else %>
-                <%= image_tag "no-images.png", class: "course-image" %>
+                <%= image_tag "no-images.png", class: "no-list-image" %>
               <% end %>
             </div>
             <div class= "public" >
-              <p>公開設定: <%= @course.public == true ? "公開" : "非公開" %></p>
+              <p>公開設定 <i class="fa-solid fa-eye"></i>・・・<%= @course.public == true ? "公開" : "非公開" %></p>
             </div>
-            <div class= "comment_container" >
+            <div class= "comment-container" >
+              <h3>コメント</h3>
               <%= form_with(model:[@course, @comment], method: :post) do |f| %>
-                <%= f.text_area :comment_content,placeholder: 'コメント本文' %>
+                <%= f.text_area :comment_content, size: "30x5",placeholder: 'コメント本文', class: 'comment-item' %>
                 <%= f.hidden_field :course_id, value: @course.id %>
                 <br>
-                <%= f.submit 'コメントする' %>
+                <%= f.submit "コメントする", class: "btn btn-info" %>
               <% end %>
-              <p>コメント一覧</p>
-              <% @comments.each do |c| %>
-                <div>
-                  <a href="/users/<%= @course.user.id %>"><%= c.user.name %></a>
-                  <%= c.comment_content %>
-                  <hr>
-                </div>
-              <% end %>
-            </div>
-            <div class=" list-footer">
-              <div class="achieved-button">
-                <%= link_to  new_course_path(id: @course.id) do %>
+              <div class ="comment-list">
+                <p>コメント一覧 <i class="fas fa-comment-alt "></i></p>
+                <% @course.comments.each do |comment| %>
+                  <div class= "comment-content">
+                    <a href="/users/<%= comment.user.id %>"><%= comment.user.name %></a>さん</br>
+                    <% if comment.user.image.attached? %>
+                      <%= image_tag comment.user.image, class:"comment-image" %>
+                    <% else %>
+                      <%= image_tag "default_icon.jpg", class:"comment-image" %>
+                    <% end %>
+                    <%= comment.comment_content %>
+                    <% if comment.user == current_user %> 
+                      <div>
+                        <%= link_to  course_comment_path(comment.course, comment), method: :delete, class: 'btn btn-warning btn-sm' do %>
+                          <i class="fa-solid fa-trash-can">削除</i>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
                 <% end %>
               </div>
+            </div>
+            <div class=" list-footer">
+                <%= link_to  new_course_path(id: @course.id) do %>
+                <% end %>
               <div class="list-icons">
                 <% if @course.user == current_user %>
-                  <div class="icon-link">
+                  <div class="course-icon-link">
                     <%= link_to  edit_course_path(@course.id),  class: 'btn btn-primary mr-3' do  %>
                       <i class="fa-solid fa-pen-to-square">コース編集</i>
                     <% end %>
                   </div>
-                  <div class="icon-link">
+                  <div class="course-icon-link">
                     <%= link_to course_path(@course.id), method: :delete, class: 'btn btn-danger' do %>
                       <i class="fa-solid fa-trash-can">コース削除</i>
                     <% end %>
