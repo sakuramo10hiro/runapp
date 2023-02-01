@@ -41,7 +41,7 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
     @course.user_id = current_user.id
     if @course.save
-      redirect_to mypage_path, notice: '新しいコースが追加されました'
+      redirect_to mypage_path, notice: '新しいコースが追加されました。'
     else
       render "new"
     end
@@ -54,7 +54,7 @@ class CoursesController < ApplicationController
   def update
     @course = Course.find(params[:id])
     if @course.update(course_params)
-      redirect_to mypage_path, notice: 'コース情報が更新されました'
+      redirect_to mypage_path, notice: 'コース情報が更新されました。'
     else
       render :new
     end
@@ -64,7 +64,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     @course.user_id = current_user.id
     @course.destroy!
-    redirect_to mypage_path, notice: 'コースを削除しました'
+    redirect_to mypage_path, notice: 'コースを削除しました。'
   end
 
   def all_index

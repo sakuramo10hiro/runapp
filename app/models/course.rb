@@ -13,6 +13,6 @@ class Course < ApplicationRecord
   end
   validates :course_name, presence: true, length: { maximum: 30 }
   validates :distance, presence: true, numericality: true
-  validates :course_description, length: { maximum: 200 }
+  validates :course_description, presence: true, length: { maximum: 200 }
   validates :public, inclusion: { in: [true, false] }
 end

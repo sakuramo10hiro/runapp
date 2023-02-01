@@ -14,15 +14,15 @@
           <%= render "shared/followers", user: @user %>
           <%= render "shared/follow_button", user: @user %> 
           <div class="user-info">
-            <p>自己紹介</p>
-              <%=@user.introduction %>
+            <p>自己紹介<i class="fa-solid fa-user"></i></p>
+            <i class="fa-solid fa-hippo"></i> <%=@user.introduction %>
             <% if @user == current_user %>
-              <p>メールアドレス : <span><%= @user.email %></span></p>
+              <p>メールアドレス<i class="fa-regular fa-envelope"></i>・・・<span><%= @user.email %></span></p>
             <% end %>
             <% if @user == current_user %>
-              <p>投稿コース・・・<span><%= link_to current_user.courses.count, mypage_path %></span></p>
+              <p>投稿コース<i class="fa-solid fa-person-running"></i>・・・<span><%= link_to current_user.courses.count, mypage_path %></span></p>
             <% else %>
-              <p><%= @user.name %>さんの投稿コース・・・<span><%= link_to @user.courses.count, index_user_course_path %></span></p>
+              <p><%= @user.name %>さんの投稿コース<i class="fa-solid fa-person-running"></i>・・・<span><%= link_to @user.courses.count, index_user_course_path %></span></p>
             <% end %>
           </div>
           <div class="icon-link">

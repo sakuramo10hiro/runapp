@@ -1,0 +1,17 @@
+ja:
+  activerecord:
+    models:
+      course: コース
+    attributes:
+      course:
+        course_name: コース名
+        course_description: コース説明
+        distance: 距離
+        public: 公開設定
+        road_type: ロードタイプ
+        route: コースルート
+        toilet: 公園やトイレ
+        undulation: 起伏
+        signal: 信号機
+        address: 住所
+        

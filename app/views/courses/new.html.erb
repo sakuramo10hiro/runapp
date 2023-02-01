@@ -4,6 +4,7 @@
       <h2>新規コース投稿</h2>
       <div class="field-item-container">
         <%= form_with model: @course do |f| %>
+          <%= render 'shared/error_messages', model: f.object %>
           <div class="field-item">
             <%= f.label :コース名, class:"item-label" %><span class="item-sub-label">(30文字以内)</span><br />
             <%= f.text_field :course_name, class:"text-field" %>

@@ -29,37 +29,39 @@
             <p>コースルート <i class="fa-solid fa-route"></i> ・・・<%= @route[@course.route] %></p>
             <p>公園やトイレ <i class="fa-solid fa-restroom"></i> ・・・<%= @toilet[@course.toilet] %></p>
             <p>起伏 <i class="fa-solid fa-mound"></i> ・・・<%= @undulation[@course.undulation] %></p>
-            <p>信号 <i class="fa-solid fa-traffic-light"></i> ・・・<%= @signal[@course.signal] %></p>
+            <p>信号機 <i class="fa-solid fa-traffic-light"></i> ・・・<%= @signal[@course.signal] %></p>
             <!-- 住所表示エリア -->            
             <p>地図 <i class="fa-solid fa-location-dot"></i> ・・・<%= @course.address %></p>
+            <% if @course.latitude.present? && @course.longitude.present? %>
             <div id='map'></div>
             <!-- Googleマップ表示用の Javascript -->
-            <script>
-              function initMap(){
-                // 地図の位置情報(緯度・経度)を取得
-                let mapPosition = {lat: <%= @course.latitude || 0 %> , lng: <%= @course.longitude || 0 %> };
-                let map = new google.maps.Map(document.getElementById('map'), {
-                  zoom: 15,
-                  center: mapPosition
-                });
-                let transitLayer = new google.maps.TransitLayer();
-                transitLayer.setMap(map);            
-                let contentString = '【住所】<%= @course.address %>';
-                let infowindow = new google.maps.InfoWindow({
-                  content: contentString
-                });            
-                let marker = new google.maps.Marker({
-                  position: mapPosition,
-                  map: map,
-                  title: contentString
-                });
-                marker.addListener('click', function(){
-                  infowindow.open(map, marker);
-                });
-              }
+              <script>
+                function initMap(){
+                  // 地図の位置情報(緯度・経度)を取得
+                  let mapPosition = {lat: <%= @course.latitude || 0 %> , lng: <%= @course.longitude || 0 %> };
+                  let map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 15,
+                    center: mapPosition
+                  });
+                  let transitLayer = new google.maps.TransitLayer();
+                  transitLayer.setMap(map);            
+                  let contentString = '【住所】<%= @course.address %>';
+                  let infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                  });            
+                  let marker = new google.maps.Marker({
+                    position: mapPosition,
+                    map: map,
+                    title: contentString
+                  });
+                  marker.addListener('click', function(){
+                    infowindow.open(map, marker);
+                  });
+                }
               </script>
               <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
-              <p>コース写真<i class="fa-solid fa-image"></i> </p>
+            <% end %>
+            <p>コース写真<i class="fa-solid fa-image"></i> </p>
             <div class="course-image-container">
               <% if @course.course_image.attached? %>
                 <%= image_tag @course.course_image, class: "course-list-image" %>
@@ -71,27 +73,28 @@
               <p>公開設定 <i class="fa-solid fa-eye"></i>・・・<%= @course.public == true ? "公開" : "非公開" %></p>
             </div>
             <div class= "comment-container" >
-              <h3>コメント</h3>
+              <h3>コメント欄</h3>
               <%= form_with(model:[@course, @comment], method: :post) do |f| %>
-                <%= f.text_area :comment_content, size: "30x5",placeholder: 'コメント本文', class: 'comment-item' %>
+                <%= f.text_area :comment_content, size: "30x5",placeholder: 'コメント本文(100文字以内)', class: 'comment-item' %>
                 <%= f.hidden_field :course_id, value: @course.id %>
                 <br>
                 <%= f.submit "コメントする", class: "btn btn-info" %>
               <% end %>
               <div class ="comment-list">
-                <p>コメント一覧 <i class="fas fa-comment-alt "></i></p>
+                <p>コメント一覧 <i class="fas fa-comment-alt "></i> <%= @course.comments.count %></p>
                 <% @course.comments.each do |comment| %>
                   <div class= "comment-content">
-                    <a href="/users/<%= comment.user.id %>"><%= comment.user.name %></a>さん</br>
+                    <a href="/users/<%= comment.user.id %>"><%= comment.user.name %></a>
                     <% if comment.user.image.attached? %>
                       <%= image_tag comment.user.image, class:"comment-image" %>
                     <% else %>
                       <%= image_tag "default_icon.jpg", class:"comment-image" %>
                     <% end %>
-                    <%= comment.comment_content %>
+                    <i class="fa-solid fa-clock"></i><%= comment.created_at.strftime("コメント日時  %-m月%-d日  %-H時%M分") %></br>
+                    <i class="fas fa-comment-alt "></i> <%= comment.comment_content %>
                     <% if comment.user == current_user %> 
                       <div>
-                        <%= link_to  course_comment_path(comment.course, comment), method: :delete, class: 'btn btn-warning btn-sm' do %>
+                        <%= link_to  course_comment_path(comment.course, comment), method: :delete, data: { confirm: "コメントを削除しますか？" }, class: 'btn btn-warning btn-sm' do %>
                           <i class="fa-solid fa-trash-can">削除</i>
                         <% end %>
                       </div>
@@ -111,7 +114,7 @@
                     <% end %>
                   </div>
                   <div class="course-icon-link">
-                    <%= link_to course_path(@course.id), method: :delete, class: 'btn btn-danger' do %>
+                    <%= link_to course_path(@course.id), method: :delete, data: { confirm: "本当にコースを削除しますか？" }, class: 'btn btn-danger' do %>
                       <i class="fa-solid fa-trash-can">コース削除</i>
                     <% end %>
                   </div>
