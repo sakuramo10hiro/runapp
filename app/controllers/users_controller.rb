@@ -6,20 +6,21 @@ class UsersController < ApplicationController
   end
 
   before_action :set_user, only: [:followings, :followers]
-    def followings
-      @users = @user.followings
-    end
-  
-    def followers
-      @users = @user.followers
-    end
-  
+  def followings
+    @users = @user.followings
+  end
+
+  def followers
+    @users = @user.followers
+  end
+
   private
+
   def set_user
     @user = User.find(params[:id])
   end
-  
+
   def user_params_update
-    params.require(:user).permit(:name, :email, :image, :introduction) 
+    params.require(:user).permit(:name, :email, :image, :introduction)
   end
 end

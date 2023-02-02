@@ -1,5 +1,4 @@
 class RelationshipsController < ApplicationController
-
   def create
     @user = User.find(params[:follow_id])
     following = current_user.follow(@user)
@@ -29,5 +28,4 @@ class RelationshipsController < ApplicationController
   def user_params
     @user = User.find(params[:relationship][:follow_id])
   end
-
 end
