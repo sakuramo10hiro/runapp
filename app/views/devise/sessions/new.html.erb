@@ -22,7 +22,9 @@
             <%= f.submit "ログイン", class:"submit-btn" %>
             </div>
           </div>
-          <%= link_to 'ゲストログイン', users_guest_sign_in_path, method: :post %>
+          <div class="guest-login">
+            <%= link_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class:"btn btn-outline-dark" %>
+          </div>
         <% end %>
       </div>
     </div>
