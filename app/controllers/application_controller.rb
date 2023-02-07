@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])  # 入力フォームからアカウント名情報をDBに保存するために追加
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])  
     devise_parameter_sanitizer.permit(:account_update, keys: [:image, :introduction])
   end
 
@@ -14,5 +14,9 @@ class ApplicationController < ActionController::Base
       flash[:notice] = "新規登録が完了しました。"
       root_path
     end
+  end
+
+  def after_sign_out_path_for(resource)
+    root_path
   end
 end

@@ -24,15 +24,17 @@
             </div>
             <div class="course-icons">
                 <div class="icon-link">
-                <% if course.favorited?(current_user) %>
-                  <%= link_to course_favorites_path(course.id), method: :delete, class: "favorite-button" do %>
-                    <i class="fas fa-heart"></i> <%= course.favorites.count %>
-                  <% end %>
-                <% else %>
-                  <%= link_to course_favorites_path(course.id), method: :post do %>
-                    <i class="far fa-heart"></i> <%= course.favorites.count %>
-                  <% end %>
-                <% end %>
+                  <div class="favorites-container">
+                    <% if course.favorited?(current_user) %>
+                      <%= link_to course_favorites_path(course.id), method: :delete, class: "favorite-button" do %>
+                        <i class="fas fa-heart"></i> <%= course.favorites.count %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to course_favorites_path(course.id), method: :post do %>
+                        <i class="far fa-heart"></i> <%= course.favorites.count %>
+                      <% end %>
+                    <% end %>
+                  </div>  
               </div>
               <div class="icon-link">
                 <%= link_to  course_path(course.id), class: "comment-button" do  %>

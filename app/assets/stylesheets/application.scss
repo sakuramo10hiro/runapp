@@ -321,7 +321,7 @@
   margin: 0;
 }
 .error {
-  color:	HotPink;
+  color:HotPink;
   text-align: center;
   margin-bottom: 10px;
   padding: auto;
@@ -335,5 +335,16 @@
     li{
       list-style: none;
     }
+  }
+}
+.error_explanation{
+  color:HotPink;
+  background-color: LemonChiffon;
+  text-align: center;
+  width: 35%;
+  margin: 0;
+  border-radius: 5px;
+  li{
+    list-style: none;
   }
 }

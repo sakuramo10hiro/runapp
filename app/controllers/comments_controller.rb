@@ -6,7 +6,15 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_back(fallback_location: root_path)
     else
-      redirect_back(fallback_location: root_path)
+      @error_comment = @comment
+      @course = Course.find(params[:course_id])
+      @comment = current_user.comments.new
+      @road_type = { 0 => 'ロード', 1 => 'トレイル', 2 => 'トラック' }
+      @route = { 0 => '周回', 1 => '往復', 2 => '片道' }
+      @toilet = { 0 => '少ない', 1 => '普通', 2 => '多い' }
+      @undulation = { 0 => '少ない', 1 => '普通', 2 => '多い' }
+      @signal = { 0 => '少ない', 1 => '普通', 2 => '多い' }
+      render 'courses/show'
     end
   end
 
