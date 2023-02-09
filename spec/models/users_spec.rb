@@ -1,5 +1,8 @@
 require 'rails_helper'
 RSpec.describe User, type: :model do
+  let(:user) { FactoryBot.create(:user, name: "ユーザー", email: "user@gmail.com") }
+  let(:other_user) { FactoryBot.create(:user, name: "アザーユーザー", email: "other_user@gmail.com") }
+
   before do
     @user = FactoryBot.build(:user)
   end
@@ -58,6 +61,29 @@ RSpec.describe User, type: :model do
 
     it 'パスワードが暗号化されていること' do
       expect(@user.encrypted_password).not_to eq 'password'
+    end
+  end
+
+  describe "フォロー・フォロー解除" do
+    before { user.follow(other_user) }
+
+    describe "フォロー機能" do
+      it "成功すること" do
+        expect(user.following?(other_user)).to be_truthy
+      end
+    end
+
+    describe "フォロワー" do
+      it "問題ない場合" do
+        expect(other_user.followers.include?(user)).to be_truthy
+      end
+    end
+
+    describe "フォロー解除機能" do
+      it "成功すること" do
+        user.unfollow(other_user)
+        expect(user.following?(other_user)).to be_falsy
+      end
     end
   end
 end

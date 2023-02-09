@@ -26,11 +26,11 @@
                 <div class="icon-link">
                   <div class="favorites-container">
                     <% if course.favorited?(current_user) %>
-                      <%= link_to course_favorites_path(course.id), method: :delete, class: "favorite-button" do %>
+                      <%= link_to course_favorites_path(course.id), method: :delete, class: "link" do %>
                         <i class="fas fa-heart"></i> <%= course.favorites.count %>
                       <% end %>
                     <% else %>
-                      <%= link_to course_favorites_path(course.id), method: :post do %>
+                      <%= link_to course_favorites_path(course.id), method: :post, class: "link" do %>
                         <i class="far fa-heart"></i> <%= course.favorites.count %>
                       <% end %>
                     <% end %>

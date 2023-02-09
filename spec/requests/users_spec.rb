@@ -27,8 +27,5 @@ RSpec.describe "User", type: :request do
   it 'ユーザーのemailが取得できるか' do
     expect(response.body).to include current_user.email
   end
-
-  #it '投稿コース数が取得できるか' do
-   # expect(response.body).to have_link href: mypage_path
-  #end
 end
+
