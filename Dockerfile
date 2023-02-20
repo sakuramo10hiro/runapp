@@ -1,23 +1,25 @@
-# ベースイメージ
-FROM ruby:2.7.3
-# Railsを使うために必要なコンポーネントを環境内にインストールする
-RUN apt-get update -qq \
-  && apt-get install -y nodejs yarn postgresql-client
-# myappディレクトリを作成し、移動する
-WORKDIR /runapp
-# gemfileとgemfile.lockをコピーして既存アプリと同じgemをインストールする
-COPY Gemfile /runapp/Gemfile
-COPY Gemfile.lock /runapp/Gemfile.lock
-RUN bundle install
-# 既存アプリのコードをコンテナ内のmyappディレクトリ以下にコピーする
-COPY . /runapp
-# docker run時にserver.pidファイルを削除する設定
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
-# コンテナ起動時に公開することを想定されているポートを記述、あったほうが親切
-EXPOSE 3000
-# docker run時にrailsサーバーを起動
-CMD ["rails", "server", "-b", "0.0.0.0"]
+FROM amd64/ruby:2.7.3
 
-RUN bundle config set --global force_ruby_platform true
+RUN apt-get update -qq && \
+    apt-get install -y build-essential \
+                       nodejs
+
+RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install -y yarn
+
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get install -y nodejs    
+
+RUN mkdir /runapp
+WORKDIR /runapp
+
+ADD Gemfile /runapp/Gemfile
+ADD Gemfile.lock /runapp/Gemfile.lock
+
+RUN bundle install
+
+ADD . /runapp
+
+RUN mkdir -p tmp/sockets
