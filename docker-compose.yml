@@ -16,8 +16,11 @@ services:
   db:
     platform: linux/x86_64
     image: mysql:8.0
-    env_file:
-      - .env
+    environment: 
+      MYSQL_USER : appuser
+      MYSQL_PASSWORD : Runapp10@
+      MYSQL_HOST : localhost
+      MYSQL_ROOT_PASSWORD : password
     ports:
      - 3306:3306
     volumes:
