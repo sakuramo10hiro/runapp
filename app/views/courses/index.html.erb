@@ -1,0 +1,70 @@
+<div class="page-container">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <%= link_to "#{current_user.name}のコース", mypage_path, class:"nav-link active" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "全員のコース", otherpage_path, class:"nav-link" %>
+    </li>
+  </ul>
+  <div class="inside-container">
+    <div class="new-course">
+      <%= link_to(new_course_path) do %> 
+        <button type="button" class="btn btn-outline-success create-btn">新規作成</button>
+      <% end %>
+    </div> 
+    <div class="panel-container">
+      <% @courses.each do |course| %>
+        <div class="course-panel">
+          <div class="panel-lower">
+            <h2><%= link_to course.course_name, course_path(course.id) %></h2>
+            <div class ="course-content">
+              <p>コース作成日<i class="fa-solid fa-clock"></i> ・・・<%= course.created_at.strftime("%Y年%m月%d日") %></p>
+              <p>コース説明<i class="fa-solid fa-pen-nib"></i> ・・・<%= course.course_description %></p>
+              <p>コース総距離<i class="fa-solid fa-person-running"></i> ・・・<%= course.distance %> km </p>
+              <p>コース写真<i class="fa-solid fa-image"></i> </p>
+            </div>
+            <div class ="course-image-content">
+              <% if course.course_image.attached? %>
+                <%= image_tag course.course_image, class: "course-image" %>
+              <% else %>
+                <%= image_tag "no-images.png", class: "no-image" %>
+              <% end %>
+            </div>
+            <div class="course-icons">
+              <div class="icon-link">
+                <div class="favorites-container">
+                  <% if course.favorited?(current_user) %>
+                    <%= link_to course_favorites_path(course.id), method: :delete, class: "link" do %>
+                      <i class="fas fa-heart"></i> <%= course.favorites.count %>
+                    <% end %>
+                  <% else %>
+                    <%= link_to course_favorites_path(course.id), method: :post, class: "link" do %>
+                      <i class="far fa-heart"></i> <%= course.favorites.count %>
+                    <% end %>
+                  <% end %>
+                </div>  
+              </div>
+              <div class="icon-link">
+                <%= link_to  course_path(course.id), class: "comment-button" do  %>
+                  <i class="fas fa-comment-alt "></i> <%= "#{course.comments.count}" %>
+                <% end %>
+              </div>
+              <div class="icon-link">
+                <%= link_to  edit_course_path(course), class: "edit-link" do  %>
+                  <i class="fa-solid fa-pen-to-square"></i>
+                <% end %>
+              </div>
+              <div class="icon-link">
+                <%= link_to course_path(course.id), method: :delete, data: { confirm: "本当にコースを削除しますか？" }, class: "delete-link" do %>
+                  <i class="fa-solid fa-trash-can"></i>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+

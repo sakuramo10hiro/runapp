@@ -1,0 +1,32 @@
+<div class="page-container">
+  <div class="form-container">
+    <div class="form-content">
+      <h2>ログイン</h2>
+      <div class="field-item-container">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="field-item">
+            <%= f.label :メールアドレス, class:"item-label" %><br />
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"text-field" %>
+          </div>
+          <div class="field-item">
+            <%= f.label :パスワード, class:"item-label" %><br />
+            <%= f.password_field :password, autocomplete: "current-password", class:"text-field" %>
+          </div>
+          <% if devise_mapping.rememberable? %>
+            <div class="field-item">
+              <%= f.check_box :remember_me %>
+              <%= f.label :ログイン情報を記憶, class:"item-sub-label"%>
+            </div>
+          <% end %>
+          <div class="actions">
+            <%= f.submit "ログイン", class:"submit-btn" %>
+            </div>
+          </div>
+          <div class="guest-login">
+            <%= link_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class:"btn btn-outline-dark" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <div>
+</div>

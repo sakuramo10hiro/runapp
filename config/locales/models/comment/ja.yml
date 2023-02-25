@@ -1,0 +1,8 @@
+ja:  
+  activerecord:
+    models:
+      comment: コメント
+    attributes:
+      comment:
+        comment_content: コメント内容
+        created_at: 作成日時

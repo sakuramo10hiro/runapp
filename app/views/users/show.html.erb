@@ -1,0 +1,40 @@
+<div class="page-container">
+  <div class="main-container">
+    <div class="profile-container">
+      <div class="image-container">
+        <% if @user.image.attached? %>
+          <%= image_tag @user.image, class: "profile-image" %>
+        <% else %>
+          <%= image_tag "default_icon.jpg", class: "profile-image" %>
+        <% end %>
+      </div>
+      <div class="info-container">
+        <div class="info" >
+          <h2><%= @user.name %></h2>
+          <%= render "shared/followers", user: @user %>
+          <%= render "shared/follow_button", user: @user %> 
+          <div class="user-info">
+            <p>自己紹介<i class="fa-solid fa-user"></i></p>
+            <i class="fa-solid fa-hippo"></i> <%=@user.introduction %>
+            <% if @user == current_user %>
+              <p>メールアドレス<i class="fa-regular fa-envelope"></i>・・・<span><%= @user.email %></span></p>
+            <% end %>
+            <% if @user == current_user %>
+              <p>投稿コース<i class="fa-solid fa-person-running"></i>・・・<span><%= link_to current_user.courses.count, mypage_path %></span></p>
+            <% else %>
+              <p><%= @user.name %>さんの投稿コース<i class="fa-solid fa-person-running"></i>・・・<span><%= link_to @user.courses.count, index_user_course_path %></span></p>
+            <% end %>
+          </div>
+          <div class="icon-link">
+            <% if @user == current_user %>
+              <%= link_to edit_user_registration_path, class:"link" do %>
+                <span>プロフィール編集</span>
+                <i class="fa-solid fa-pen-to-square"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,136 @@
+<div class="page-container">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <%= link_to "#{current_user.name}のコース", mypage_path, class:"nav-link active" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "全員のコース", otherpage_path, class:"nav-link" %>
+    </li>
+  </ul>
+  <div class="inside-container">
+    <div class="new-course">
+      <%= link_to(new_course_path) do %> 
+        <button type="button" class="btn btn-outline-success create-btn">新規作成</button>
+      <% end %>
+    </div> 
+    <div class="panel-container">
+        <div class="course-main-panel">
+          <div class="panel-lower">
+           <h2><%= @course.course_name %></h2>
+            <% if @course.user.image.attached? %>
+              <%= image_tag @course.user.image, class:"icon-image" %>
+            <% else %>
+              <%= image_tag "default_icon.jpg", class:"icon-image" %>
+            <% end %>
+            <p>投稿者<i class="fa-solid fa-user"></i> <%= link_to(@course.user.name, "/user/#{@course.user.id}") %>さん</p>
+            <p>コース作成日<i class="fa-solid fa-clock"></i> ・・・<%= @course.created_at.strftime("%Y年%m月%d日") %></p>
+            <p>コース説明 <i class="fa-solid fa-pen-nib"></i> ・・・<%= @course.course_description %></p>
+            <p>コース総距離 <i class="fa-solid fa-person-running"></i> ・・・<%= @course.distance %> km </p>
+            <p>ロードタイプ <i class="fa-sharp fa-solid fa-road"></i> ・・・<%= @road_type[@course.road_type] %></p>
+            <p>コースルート <i class="fa-solid fa-route"></i> ・・・<%= @route[@course.route] %></p>
+            <p>公園やトイレ <i class="fa-solid fa-restroom"></i> ・・・<%= @toilet[@course.toilet] %></p>
+            <p>起伏 <i class="fa-solid fa-mound"></i> ・・・<%= @undulation[@course.undulation] %></p>
+            <p>信号機 <i class="fa-solid fa-traffic-light"></i> ・・・<%= @signal[@course.signal] %></p>
+            <!-- 住所表示エリア -->            
+            <p>地図 <i class="fa-solid fa-location-dot"></i> ・・・<%= @course.address %></p>
+            <% if @course.latitude.present? && @course.longitude.present? %>
+            <div id='map'></div>
+            <!-- Googleマップ表示用の Javascript -->
+              <script>
+                function initMap(){
+                  // 地図の位置情報(緯度・経度)を取得
+                  let mapPosition = {lat: <%= @course.latitude || 0 %> , lng: <%= @course.longitude || 0 %> };
+                  let map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 15,
+                    center: mapPosition
+                  });
+                  let transitLayer = new google.maps.TransitLayer();
+                  transitLayer.setMap(map);            
+                  let contentString = '【住所】<%= @course.address %>';
+                  let infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                  });            
+                  let marker = new google.maps.Marker({
+                    position: mapPosition,
+                    map: map,
+                    title: contentString
+                  });
+                  marker.addListener('click', function(){
+                    infowindow.open(map, marker);
+                  });
+                }
+              </script>
+              <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
+            <% end %>
+            <p>コース写真<i class="fa-solid fa-image"></i> </p>
+            <div class="course-image-container">
+              <% if @course.course_image.attached? %>
+                <%= image_tag @course.course_image, class: "course-list-image" %>
+              <% else %>
+                <%= image_tag "no-images.png", class: "no-list-image" %>
+              <% end %>
+            </div>
+            <div class= "public" >
+              <p>公開設定 <i class="fa-solid fa-eye"></i>・・・<%= @course.public == true ? "公開" : "非公開" %></p>
+            </div>
+            <div class= "comment-container" >
+              <h3>コメント欄</h3>
+              <%= form_with(model:[@course, @comment], method: :post) do |f| %>
+                <% if @error_comment.present? %>
+                  <div class="error_explanation">
+                    <% @error_comment.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </div>
+                <% end %>
+                <%= f.text_area :comment_content, size: "30x5",placeholder: 'コメント本文(100文字以内)', class: 'comment-item' %>
+                <%= f.hidden_field :course_id, value: @course.id %>
+                <br>
+                <%= f.submit "コメントする", class: "btn btn-info" %>
+              <% end %>
+              <div class ="comment-list">
+                <p>コメント一覧 <i class="fas fa-comment-alt "></i> <%= @course.comments.count %></p>
+                <% @course.comments.each do |comment| %>
+                  <div class= "comment-content">
+                    <a href="/users/<%= comment.user.id %>"><%= comment.user.name %></a>
+                    <% if comment.user.image.attached? %>
+                      <%= image_tag comment.user.image, class:"comment-image" %>
+                    <% else %>
+                      <%= image_tag "default_icon.jpg", class:"comment-image" %>
+                    <% end %>
+                    <i class="fa-solid fa-clock"></i><%= comment.created_at.strftime("コメント日時  %-m月%-d日  %-H時%M分") %></br>
+                    <i class="fas fa-comment-alt "></i> <%= comment.comment_content %>
+                    <% if comment.user == current_user %> 
+                      <div>
+                        <%= link_to  course_comment_path(comment.course, comment), method: :delete, data: { confirm: "コメントを削除しますか？" }, class: 'btn btn-warning btn-sm' do %>
+                          <i class="fa-solid fa-trash-can">削除</i>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            <div class=" list-footer">
+                <%= link_to  new_course_path(id: @course.id) do %>
+                <% end %>
+              <div class="list-icons">
+                <% if @course.user == current_user %>
+                  <div class="course-icon-link">
+                    <%= link_to  edit_course_path(@course.id),  class: 'btn btn-primary mr-3' do  %>
+                      <i class="fa-solid fa-pen-to-square">コース編集</i>
+                    <% end %>
+                  </div>
+                  <div class="course-icon-link">
+                    <%= link_to course_path(@course.id), method: :delete, data: { confirm: "本当にコースを削除しますか？" }, class: 'btn btn-danger' do %>
+                      <i class="fa-solid fa-trash-can">コース削除</i>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>  
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
