@@ -1,4 +1,3 @@
-config/unicorn.rb | 設定ファイルの編集
 # rootパスのディレクトリを指定
 root_path = File.expand_path('../../', __FILE__)
 
