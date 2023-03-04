@@ -14,14 +14,14 @@
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"text-field" %>
           </div>
           <div class="field-item">
-            <%= f.label :パスワード, class:"item-label" %>
+            <%= f.label :パスワード, class:"item-label" %><br>
             <% if @minimum_password_length %>
             <span class="item-sub-label">(<%= @minimum_password_length %>文字以上で登録してください)</span>
             <% end %><br />
             <%= f.password_field :password, autocomplete: "new-password", class:"text-field" %>
           </div>
           <div class="field-item">
-            <%= f.label :パスワードの確認, class:"item-label" %><br />
+            <%= f.label :パスワード再入力, class:"item-label" %><br />
             <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"text-field" %>
           </div>
           <div class="actions">

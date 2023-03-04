@@ -1,40 +1,48 @@
 <header class="header">
-  <div class="header-container">
-    <div class="header-left">
+  <div class="header__inner">
+    <div class="header__title header-title">
       <%= link_to root_path do%>
         <%= image_tag 'logo.png', alt: 'ロゴイメージ',:size =>'350x60',class:'logo-image' %>
       <% end %>
     </div> 
-    <div class="header-rigtht">
-      <ul class="nav">
-      <% if user_signed_in? %>
-        <li class="header-nav-item">
-          <%= link_to "TOP", root_path, class: "nav-text" %>
-        </li>
-        <li class="header-nav-item">
-          <%= link_to "マイコース", mypage_path, class: "nav-text" %>
-        </li>
-        <li class="header-nav-item">
-          <%= link_to "全員のコース", otherpage_path, class: "nav-text" %>
-        </li>
-        <li class="header-nav-item">
-          <%= link_to "マイページ","/user/#{current_user.id}", class: "nav-text" %> 
-        </li>
-        <li class="header-nav-item">
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-text" %>
-        </li>
-      <% else %> 
-        <li class="header-nav-item">
-          <%= link_to "TOP", root_path, class: "nav-text" %>
-        </li>
-        <li class="header-nav-item">
-        <%= link_to "新規登録", new_user_registration_path, class: "nav-text" %> 
-        </li>
-        <li class="header-nav-item">
-          <%= link_to "ログイン", new_user_session_path, class: "nav-text" %>  
-        </li>
-      <% end %> 
-      </ul>    
-    </div>
+    <nav class="header__nav nav" id="js-nav">
+      <ul class="nav__items nav-items">
+        <% if user_signed_in? %>
+          <li class="nav-items__item">
+            <%= link_to "TOP", root_path, class: "nav-text" %>
+          </li>
+          <li class="nav-items__item">
+            <%= link_to "マイコース", mypage_path, class: "nav-text" %>
+          </li>
+          <li class="nav-items__item">
+            <%= link_to "全員のコース", otherpage_path, class: "nav-text" %>
+          </li>
+          <li class="nav-items__item">
+            <%= link_to "マイページ","/user/#{current_user.id}", class: "nav-text" %> 
+          </li>
+          <li class="nav-items__item">
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-text" %>
+          </li>
+        <% else %> 
+          <li class="nav-items__item">
+            <%= link_to "TOP", root_path, class: "nav-text" %>
+          </li>
+          <li class="nav-items__item">
+          <%= link_to "新規登録", new_user_registration_path, class: "nav-text" %> 
+          </li>
+          <li class="nav-items__item">
+            <%= link_to "ログイン", new_user_session_path, class: "nav-text" %>  
+          </li>
+          <li class="nav-items__item">
+            <%= link_to 'ゲストログイン', users_guest_sign_in_path, method: :post %> 
+          </li>
+        <% end %> 
+      </ul> 
+    </nav>
+    <button class="header__hamburger hamburger active" id="js-hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </header>

@@ -57,6 +57,17 @@
   color: white;
   justify-content: center;
 }
+@media screen and (max-width:540px) {
+  .course-panel{
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    border: solid 1px black;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px $border-gray-color;
+  }
+}
 .category-icon{
   i{
     font-size: 30px;
@@ -231,18 +242,19 @@
   }
   .comment-item{
     font-size: 15px;
-    margin: 20px;
+    margin:10px 0px 10px 20px;
   }
 }
 .comment-list{
   margin-bottom: 20px;
   margin-left: 20px;
   .comment-content{
-    width: 40%;
+    width: 90%;
     border-radius: 1px 40px 40px 40px;
     border: 1.5px solid $border-gray-color;
     padding: 10px 10px 15px 15px;
     margin-bottom: 10px;
+    font-size: 80%;
   }
   .date-time{
     list-style: none;
@@ -258,5 +270,6 @@
   .btn-warning{
     color: #fff;
     margin-top: 10px;
+    font-size: 80%;
   }
 }
