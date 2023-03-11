@@ -63,6 +63,7 @@
   transform: translateX(100%); 
   background-color: black;
   transition: ease .4s; 
+  opacity:0.8;
 }
 .header__hamburger {
   width: 50px;
@@ -133,16 +134,7 @@
   }
 }
 .header__nav {
-  position: absolute;
-  right: 0;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  transform: translateX(100%);
-  background-color: black;
-  transition: ease .4s;
-  opacity:0.8;
+  transform: translateX(-100%);
 }
 @media screen and (min-width: 960px) {
   .header__nav {
@@ -299,7 +291,7 @@
   .form-container{
     border-radius: 20px 20px 20px 20px;
     border: px solid $brown;
-    width: 90%;
+    width: 100%;
     margin-bottom: 30px;
     margin-top: 20px;
     margin-right: auto;
@@ -406,7 +398,7 @@
      .button-item{
       margin-bottom: 20px;
       .radio-button{
-        margin: 0 10px 0 10px;
+        margin: 0 10px;
       }
       .item-label{
         width: 100%;
@@ -436,6 +428,19 @@
      }
    }
  }
+ @media screen and (max-width:540px) { 
+  .form-content{
+    .field-item-container{
+      .button-item{
+        margin-bottom: 10px;
+        text-align: left;
+        .radio-button{
+          margin: 5px;
+        }
+      }
+    }
+  }
+}
  @media screen and (max-width:540px) {
   .form-content{
     width: 100%;
@@ -445,7 +450,12 @@
     margin:0;
     .field-item-container{
       width: 100%;
+      font-size: 13px;
     }
+    .item-label{
+      font-size: 13px;
+    }
+
   }
 }  
  .guest-login{
