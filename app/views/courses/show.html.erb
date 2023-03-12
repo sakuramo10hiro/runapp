@@ -98,7 +98,9 @@
                     <% else %>
                       <%= image_tag "default_icon.jpg", class:"comment-image" %>
                     <% end %>
-                    <i class="fa-solid fa-clock"></i><%= comment.created_at.strftime("コメント日時  %-m月%-d日  %-H時%M分") %></br>
+                    <div class="comment-date-time">
+                      <i class="fa-solid fa-clock"></i><%= comment.created_at.strftime("コメント日時  %-m月%-d日  %-H時%M分") %></br>
+                    </div>
                     <i class="fas fa-comment-alt "></i> <%= comment.comment_content %>
                     <% if comment.user == current_user %> 
                       <div>
